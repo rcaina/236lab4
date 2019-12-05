@@ -7,6 +7,6 @@
 
 using namespace std;
 
-Database::Database(){
-	
+Database::Database() {
+
 }

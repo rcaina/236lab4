@@ -13,7 +13,7 @@ using namespace std;
 class Lexer {
 
 public:
-	Lexer(){}
+	Lexer() {}
 	Lexer(char* readMe);
 	vector <Tokens> getVector();
 

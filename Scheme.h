@@ -7,12 +7,12 @@
 
 using namespace std;
 
-class Scheme: public vector<string> {
+class Scheme : public vector<string> {
 
-        public:
-		Scheme();
+public:
+	Scheme();
 
-        private:
+private:
 
 };
 #endif

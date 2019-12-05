@@ -12,7 +12,7 @@ using namespace std;
 class Tokens {
 
 public:
-	Tokens(){}
+	Tokens() {}
 	Tokens(string fam, string symbol, int which_line) {
 		type = fam;
 		sym = symbol;

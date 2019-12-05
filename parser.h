@@ -17,39 +17,39 @@ class parser {
 public:
 	parser();
 
-	void startParser(){
+	void startParser() {
 		datalogProgram();
 	}
 
-	void setvector(vector <Tokens> Tokens){
+	void setvector(vector <Tokens> Tokens) {
 
-		parsingTokens = Tokens; 
+		parsingTokens = Tokens;
 
 	}
-	
+
 	void toString();
 
 	vector<predicate> getSchemes();
-        vector<predicate> getFacts();
-        vector<rulez> getRules();
-        vector<predicate> getQueries();
+	vector<predicate> getFacts();
+	vector<rulez> getRules();
+	vector<predicate> getQueries();
 
 private:
 
 	vector <Tokens> parsingTokens;
-	
+
 	vector <predicate> schemes;
-        vector <predicate> facts;
-        vector <predicate> queries;
-        vector <rulez> rules;
+	vector <predicate> facts;
+	vector <predicate> queries;
+	vector <rulez> rules;
 	vector <string>	stringDomain;
 
 	predicate current;
 	rulez currentrule;
 	string item = "";
-	
+
 	int level = 0;
-	
+
 	void checkRemove(string);
 	void datalogProgram();
 	void schemeList();
@@ -72,4 +72,3 @@ private:
 };
 
 #endif
-

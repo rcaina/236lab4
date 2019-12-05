@@ -10,7 +10,7 @@
 using namespace std;
 
 Lexer::Lexer(char* readMe) {
-    
+
 
 	ifstream myfile;
 	myfile.open(readMe);
@@ -20,7 +20,7 @@ Lexer::Lexer(char* readMe) {
 	int hold_num = 0;
 	int i = 0;
 	bool done = false;
-	
+
 	string currentString = "";
 	string temp;
 	Tokens t;
@@ -30,7 +30,7 @@ Lexer::Lexer(char* readMe) {
 		if (isalpha(item)) {
 
 			while (isalnum(item)) {
-			    
+
 				currentString = currentString + item;
 				myfile.get(item);
 			}
@@ -62,8 +62,8 @@ Lexer::Lexer(char* readMe) {
 				currentString == "";
 				currentString.clear();
 			}
-			else if (item != '\''){
-			    t = Tokens("ID", currentString, line_num);
+			else if (item != '\'') {
+				t = Tokens("ID", currentString, line_num);
 				myTokens.push_back(t);
 				currentString == "";
 				currentString.clear();
@@ -71,312 +71,308 @@ Lexer::Lexer(char* readMe) {
 
 		}
 
-			switch (item) {
-                  
-			case '+':
-				t = Tokens("ADD", "+", line_num);
-				myTokens.push_back(t);
+		switch (item) {
 
-				break;
-			case '*':
-				t = Tokens("MULTIPLY", "*", line_num);
-				myTokens.push_back(t);
+		case '+':
+			t = Tokens("ADD", "+", line_num);
+			myTokens.push_back(t);
 
-				break;
-			case ':':
-			
-			    if (myfile.peek()== '-'){
+			break;
+		case '*':
+			t = Tokens("MULTIPLY", "*", line_num);
+			myTokens.push_back(t);
+
+			break;
+		case ':':
+
+			if (myfile.peek() == '-') {
 				t = Tokens("COLON_DASH", ":-", line_num);
-					myTokens.push_back(t);
-					myfile.get(item);
-				}
-				else {
+				myTokens.push_back(t);
+				myfile.get(item);
+			}
+			else {
 
 				t = Tokens("COLON", ":", line_num);
 				myTokens.push_back(t);
-				}
+			}
 
-				break;
-			case '(':
-				t = Tokens("LEFT_PAREN", "(", line_num);
-				myTokens.push_back(t);
+			break;
+		case '(':
+			t = Tokens("LEFT_PAREN", "(", line_num);
+			myTokens.push_back(t);
 
-				break;
-			case ')':
+			break;
+		case ')':
 
-				t = Tokens("RIGHT_PAREN", ")", line_num);
-				myTokens.push_back(t);
+			t = Tokens("RIGHT_PAREN", ")", line_num);
+			myTokens.push_back(t);
 
-				break;
-			case '?':
-				t = Tokens("Q_MARK", "?", line_num);
-				myTokens.push_back(t);
+			break;
+		case '?':
+			t = Tokens("Q_MARK", "?", line_num);
+			myTokens.push_back(t);
 
-				break;
-			case '.':
-				t = Tokens("PERIOD", ".", line_num);
-				myTokens.push_back(t);
+			break;
+		case '.':
+			t = Tokens("PERIOD", ".", line_num);
+			myTokens.push_back(t);
 
-				break;
-			case ',':
-				t = Tokens("COMMA", ",", line_num);
-				myTokens.push_back(t);
-				break;
+			break;
+		case ',':
+			t = Tokens("COMMA", ",", line_num);
+			myTokens.push_back(t);
+			break;
 
-			case '#':
+		case '#':
 
-				currentString = currentString + item;
-				myfile.get(item);
-				hold_num = line_num;
+			currentString = currentString + item;
+			myfile.get(item);
+			hold_num = line_num;
 
-				if(item == '|'){
+			if (item == '|') {
 
-					while(done == false){
-							
-						if(item == '\n'){
+				while (done == false) {
 
-							line_num++;
-						}
+					if (item == '\n') {
 
-						currentString = currentString + item;
-						myfile.get(item);
-						if(item == '|' && myfile.peek() == '#'){
-
-							currentString = currentString + item;
-							done = true;
-						}
-
-						if(myfile.eof()){
-
-                                                       // t = Tokens("UNDEFINED", currentString, hold_num);
-                                                       // myTokens.push_back(t);
-                                                        currentString = "";
-                                                        currentString.clear();
-                                                        hold_num = 0;
-                                                        break;
-                                                }
-
+						line_num++;
 					}
-					if(item == '|' && myfile.peek() == '#'){
 
-						myfile.get(item);
+					currentString = currentString + item;
+					myfile.get(item);
+					if (item == '|' && myfile.peek() == '#') {
+
 						currentString = currentString + item;
-                                                //t = Tokens("COMMENT", currentString, hold_num);
-                                                //myTokens.push_back(t);
-                                                currentString == "";
-                                                currentString.clear();
-                                                hold_num = 0;
-						done = false;
-                                                break;
-
-
-                                        }
-					break;
-					
-		  		}
-				else{
-
-					while(item != '\n'){
-						currentString = currentString + item;
-						myfile.get(item);
+						done = true;
 					}
-					//t = Tokens("COMMENT", currentString, hold_num);
-                                        //myTokens.push_back(t);
-                                        currentString == "";
-                                        currentString.clear();
-					myfile.putback(item);
-					hold_num = 0;
-					break;
-				}
 
+					if (myfile.eof()) {
 
-		        case '\'':
-
-				i++;
-				hold_num = line_num;
-				currentString = currentString + item;
-				myfile.get(item);
-
-				if(item == '\n'){
-					line_num++;
-
-					while(done == false){
-
-						if(myfile.eof()){
-							currentString = currentString + item;
-                                                	t = Tokens("UNDEFINED", currentString, hold_num);
-                                                	myTokens.push_back(t);
-                                                	currentString == "";
-                                                	currentString.clear();
-                                                	hold_num = 0;
-                                                	done = false;
-                                                	i = 0;
-                                                	break;
-						}
-
-						if(item == '\''){
-
-							i++;
-						}
-						currentString = currentString + item;
-					        myfile.get(item);
-
-						if(item == '\n' && myfile.peek() == '\n'){
-                                                
-                                                        done = true;
-                                                }
-						
-						if(item == '\n'){
-
-							line_num++;
-						}
-
-					}
-					if(i%2 != 0){
-
-						currentString = currentString + item;
-	                                        t = Tokens("UNDEFINED", currentString, hold_num);
-        	                                myTokens.push_back(t);
-                	                        currentString == "";
-                        	                currentString.clear();
-                                	        hold_num = 0;
-                                        	done = false;
-                                        	i = 0;
-                                        	break;
-
-					}
-					if(myfile.peek() == EOF){
+						// t = Tokens("UNDEFINED", currentString, hold_num);
+						// myTokens.push_back(t);
+						currentString = "";
+						currentString.clear();
+						hold_num = 0;
 						break;
 					}
-					t = Tokens("STRING", currentString, hold_num);
-                                        myTokens.push_back(t);
-                                        currentString == "";
-                                        currentString.clear();
-                                        hold_num = 0;
+
+				}
+				if (item == '|' && myfile.peek() == '#') {
+
+					myfile.get(item);
+					currentString = currentString + item;
+					//t = Tokens("COMMENT", currentString, hold_num);
+					//myTokens.push_back(t);
+					currentString == "";
+					currentString.clear();
+					hold_num = 0;
+					done = false;
+					break;
+
+
+				}
+				break;
+
+			}
+			else {
+
+				while (item != '\n') {
+					currentString = currentString + item;
+					myfile.get(item);
+				}
+				//t = Tokens("COMMENT", currentString, hold_num);
+				//myTokens.push_back(t);
+				currentString == "";
+				currentString.clear();
+				myfile.putback(item);
+				hold_num = 0;
+				break;
+			}
+
+
+		case '\'':
+
+			i++;
+			hold_num = line_num;
+			currentString = currentString + item;
+			myfile.get(item);
+
+			if (item == '\n') {
+				line_num++;
+
+				while (done == false) {
+
+					if (myfile.eof()) {
+						currentString = currentString + item;
+						t = Tokens("UNDEFINED", currentString, hold_num);
+						myTokens.push_back(t);
+						currentString == "";
+						currentString.clear();
+						hold_num = 0;
+						done = false;
+						i = 0;
+						break;
+					}
+
+					if (item == '\'') {
+
+						i++;
+					}
+					currentString = currentString + item;
+					myfile.get(item);
+
+					if (item == '\n' && myfile.peek() == '\n') {
+
+						done = true;
+					}
+
+					if (item == '\n') {
+
+						line_num++;
+					}
+
+				}
+				if (i % 2 != 0) {
+
+					currentString = currentString + item;
+					t = Tokens("UNDEFINED", currentString, hold_num);
+					myTokens.push_back(t);
+					currentString == "";
+					currentString.clear();
+					hold_num = 0;
 					done = false;
 					i = 0;
 					break;
 
 				}
-				if(item == '\''){
-					
+				if (myfile.peek() == EOF) {
+					break;
+				}
+				t = Tokens("STRING", currentString, hold_num);
+				myTokens.push_back(t);
+				currentString == "";
+				currentString.clear();
+				hold_num = 0;
+				done = false;
+				i = 0;
+				break;
+
+			}
+			if (item == '\'') {
+
+				i++;
+				currentString = currentString + item;
+				myfile.get(item);
+
+				while (item == '\'') {
 					i++;
 					currentString = currentString + item;
 					myfile.get(item);
-
-					while(item == '\''){
-						i++;
-						currentString = currentString + item;
-						myfile.get(item);
-					}
-					if(item == '\n' && i%2 == 0){
-						line_num++;
-	        	                        t = Tokens("STRING", currentString, hold_num);
-        	        	                myTokens.push_back(t);
-                      		         	currentString == "";
-		                                currentString.clear();
-                		                hold_num = 0;
-                               			done = false;
-						i = 0;
-                               			break;
-
-					}
-					else if(item != '\'' && i%2 == 0){
-                                                t = Tokens("STRING", currentString, hold_num);
-                                                myTokens.push_back(t);
-                                                currentString == "";
-                                                currentString.clear();
-						myfile.putback(item);
-                                                hold_num = 0;
-                                                done = false;
-                                                i = 0;
-                                                break;
-
-					}
 				}
-				if( i == 1){
-	
-					while(item != '\''){
-						currentString = currentString + item;
-						myfile.get(item);
-
-						if(item == '\'' && myfile.peek() == '\''){
-
-							currentString = currentString + item;
-        	                                        myfile.get(item);
-							currentString = currentString + item;
-	                                                myfile.get(item);
-	
-						}
-					}
-					currentString = currentString + item;
-	                                t = Tokens("STRING", currentString, hold_num);
-        	                        myTokens.push_back(t);
-                	                currentString == "";
-                        	        currentString.clear();
-                                	hold_num = 0;
-                                	i = 0;
-                                	done = false;
-                                	break;
-
-
+				if (item == '\n' && i % 2 == 0) {
+					line_num++;
+					t = Tokens("STRING", currentString, hold_num);
+					myTokens.push_back(t);
+					currentString == "";
+					currentString.clear();
+					hold_num = 0;
+					done = false;
+					i = 0;
+					break;
 
 				}
+				else if (item != '\'' && i % 2 == 0) {
+					t = Tokens("STRING", currentString, hold_num);
+					myTokens.push_back(t);
+					currentString == "";
+					currentString.clear();
+					myfile.putback(item);
+					hold_num = 0;
+					done = false;
+					i = 0;
+					break;
 
-				while(myfile.peek() != '\n'){
+				}
+			}
+			if (i == 1) {
 
+				while (item != '\'') {
 					currentString = currentString + item;
 					myfile.get(item);
+
+					if (item == '\'' && myfile.peek() == '\'') {
+
+						currentString = currentString + item;
+						myfile.get(item);
+						currentString = currentString + item;
+						myfile.get(item);
+
+					}
 				}
 				currentString = currentString + item;
-                                t = Tokens("STRING", currentString, hold_num);
-                                myTokens.push_back(t);
-                                currentString == "";
-                                currentString.clear();
-                                hold_num = 0;
+				t = Tokens("STRING", currentString, hold_num);
+				myTokens.push_back(t);
+				currentString == "";
+				currentString.clear();
+				hold_num = 0;
 				i = 0;
-                                done = false;
-                                break;
+				done = false;
+				break;
 
 
-			case '\n':
-				line_num++;
-				
-				break;
-			case ' ':
-				break;
-			case '\t':
-				break;
-			default :
-					    	currentString = currentString + item;
-			            
-			       			t = Tokens("UNDEFINED", currentString, line_num);
-						myTokens.push_back(t);
-						currentString = "";
-						cout << currentString;
-				break;
+
 			}
+
+			while (myfile.peek() != '\n') {
+
+				currentString = currentString + item;
+				myfile.get(item);
+			}
+			currentString = currentString + item;
+			t = Tokens("STRING", currentString, hold_num);
+			myTokens.push_back(t);
+			currentString == "";
+			currentString.clear();
+			hold_num = 0;
+			i = 0;
+			done = false;
+			break;
+
+
+		case '\n':
+			line_num++;
+
+			break;
+		case ' ':
+			break;
+		case '\t':
+			break;
+		default:
+			currentString = currentString + item;
+
+			t = Tokens("UNDEFINED", currentString, line_num);
+			myTokens.push_back(t);
+			currentString = "";
+			cout << currentString;
+			break;
+		}
 
 
 	}
-        t = Tokens("EOF", "", line_num);
-    	myTokens.push_back(t);
+	t = Tokens("EOF", "", line_num);
+	myTokens.push_back(t);
 
-        int k = myTokens.size();
-        for(int i = 0; i < k; i++){
-        	
-        myTokens[i].toString();
-        
-        }
+	int k = myTokens.size();
+	for (int i = 0; i < k; i++) {
 
-       // cout << "Total Tokens = " << k << "\n";
+		myTokens[i].toString();
+
+	}
+
+	// cout << "Total Tokens = " << k << "\n";
 }
 
-vector <Tokens> Lexer::getVector(){
+vector <Tokens> Lexer::getVector() {
 
 	return myTokens;
-}	
-
-
-
-                             
+}

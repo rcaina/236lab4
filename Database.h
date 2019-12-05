@@ -8,14 +8,12 @@
 
 using namespace std;
 
-class Database: public map<string, Relation> {
+class Database : public map<string, Relation> {
 
-	public:
-		Database();
+public:
+	Database();
 
-	private:
+private:
 
 };
 #endif
-
-

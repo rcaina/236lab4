@@ -15,21 +15,23 @@ using namespace std;
 
 class Interpreter {
 
-	public:
-		Interpreter(parser& datalogProgram);
+public:
+	Interpreter(parser& datalogProgram);
 
-		//Set database should : turn each scheme into a relation and put it in the database
-		//turn each fact into a tuple and put it in a relation (which is in the database)
-		
-		//sepearte function to evalaute all queries... calls evaluate predicate and prints out final results
-		void evalQueries();
-		Relation evaluatePredicate(predicate pred); // (will need this for lab 4)
+	//Set database should : turn each scheme into a relation and put it in the database
+	//turn each fact into a tuple and put it in a relation (which is in the database)
 
-	private:
+	//seperate function to evalaute all queries... calls evaluate predicate and prints out final results
+	void evalQueries();
+	Relation evaluatePredicate(predicate pred); // (will need this for lab 4)
+	bool evalSingleRule(rulez rule1);
+	void evalAllRules();
 
-		parser dL;
-		Database db;
+private:
+
+	parser dL;
+	Database db;
+	bool done = false;
 };
 #endif
-
 

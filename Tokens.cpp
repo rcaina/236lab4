@@ -36,9 +36,9 @@ void Tokens::set_line(int num) {
 
 	line = num;
 }
-string Tokens::toString(){
+string Tokens::toString() {
 
-        stringstream ss;
-        ss << "("<< type << ",\"" << sym << "\"," << line << ")" << "\n";
-        return ss.str();
+	stringstream ss;
+	ss << "(" << type << ",\"" << sym << "\"," << line << ")" << "\n";
+	return ss.str();
 }

@@ -12,14 +12,15 @@ using namespace std;
 class predicate {
 
 public:
-        
-        predicate(){};
+
+	predicate() {};
 	void set_name(string name);
 	void set_item(string item);
 	string to_string();
 	void clear();
 	string getName();
 	vector<string> getAttributes();
+	int getSize();
 
 private:
 
@@ -28,4 +29,3 @@ private:
 
 };
 #endif
-
